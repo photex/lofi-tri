@@ -1,4 +1,4 @@
-![ScreenShot](http://i.imgur.com/OH7Cq48.png)
+![ScreenShot](http://i.imgur.com/syTQkYh.png)
 
 This is an implementation of the algorithm described [here](http://paulbourke.net/papers/triangulate/)
 
