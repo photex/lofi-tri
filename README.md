@@ -38,7 +38,7 @@ you provided the triangulate function. To get something like the screenshot abov
               (let ((verts (slot-value tri 'verts)))
                 (loop for i from 0 upto 2
                    do (let* ((vi (aref verts i))
-                             (v (aref point-set vi)))
+                             (v (aref *test-points* vi)))
                         ;(print v)
                         (gl:vertex (aref v 0) (aref v 1) (aref v 2))
                         ))))))
