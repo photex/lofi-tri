@@ -4,12 +4,12 @@ This is an implementation of the algorithm described [here](http://paulbourke.ne
 
 Clone this repo into your quicklisp local projects and:
 
-    (ql:quickload :lofi-tri)
-    (defvar *test-points* (lofi-tri:random-point-array 100))
-    (defvar *test-triangulation* (lofi-tri:triangulate *test-points*))
+    (ql:quickload :lofi.tri)
+    (defvar *test-points* (lofi.tri:random-point-array 100))
+    (defvar *test-triangulation* (lofi.tri:triangulate *test-points*))
     ;; *test-triangulation* is a list of triangle structures.
 
-The `lofi-tri:triangle` struct has a slot `verts` which you can use as indices into the array of points
+The `lofi.tri:triangle` struct has a slot `verts` which you can use as indices into the array of points
 you provided the triangulate function. To get something like the screenshot above:
 
     (defun draw-circle (center radius)

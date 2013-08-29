@@ -1,6 +1,6 @@
 ;;;; package.lisp
 
-(defpackage #:lofi-tri
+(defpackage #:lofi.tri
   (:use #:cl #:sb-cga)
   (:import-from #:alexandria #:curry)
   (:export #:circle
