@@ -55,11 +55,10 @@
          (minx (aref first-point 0)) (maxx (aref first-point 0))
          (miny (aref first-point 1)) (maxy (aref first-point 1))
          (minz (aref first-point 2)) (maxz (aref first-point 2)))
-    (dotimes (i (length rest-points))
-      (let ((p (aref rest-points i)))
-        (setf minx (min minx (aref p 0))) (setf maxx (max maxx (aref p 0)))
-        (setf miny (min miny (aref p 1))) (setf maxy (max maxy (aref p 1)))
-        (setf minz (min minz (aref p 2))) (setf maxz (max maxz (aref p 2)))))
+    (loop :for p :across rest-points :do
+       (setf minx (min minx (aref p 0))) (setf maxx (max maxx (aref p 0)))
+       (setf miny (min miny (aref p 1))) (setf maxy (max maxy (aref p 1)))
+       (setf minz (min minz (aref p 2))) (setf maxz (max maxz (aref p 2))))
     (values (vec minx miny minz) (vec maxx maxy maxz))))
 
 (defun get-bounding-triangle-points (point-set &optional (fudge-factor 10))
@@ -110,20 +109,18 @@ Will return the square root of the result unless :squared t"
          (collinear? (< (abs g) +default-epsilon+))
          (cx 0.0) (cy 0.0) (dx 0.0) (dy 0.0))
     (if collinear?
-        (progn
-          (let ((minx (min (aref v0 0) (aref v1 0) (aref v2 0)))
-                (miny (min (aref v0 1) (aref v1 1) (aref v2 1)))
-                (maxx (max (aref v0 0) (aref v1 0) (aref v2 0)))
-                (maxy (max (aref v0 1) (aref v1 1) (aref v2 1))))
-            (setf cx (/ (+ minx maxx) 2))
-            (setf cy (/ (+ miny maxy) 2))
-            (setf dx (- cx minx))
-            (setf dy (- cy miny))))
-        (progn
-          (setf cx (/ (- (* d e) (* b f)) g))
-          (setf cy (/ (- (* a f) (* c e)) g))
-          (setf dx (- cx (aref v0 0)))
-          (setf dy (- cy (aref v0 1)))))
+        (let ((minx (min (aref v0 0) (aref v1 0) (aref v2 0)))
+              (miny (min (aref v0 1) (aref v1 1) (aref v2 1)))
+              (maxx (max (aref v0 0) (aref v1 0) (aref v2 0)))
+              (maxy (max (aref v0 1) (aref v1 1) (aref v2 1))))
+          (setf cx (/ (+ minx maxx) 2)
+                cy (/ (+ miny maxy) 2)
+                dx (- cx minx)
+                dy (- cy miny)))
+        (setf cx (/ (- (* d e) (* b f)) g)
+              cy (/ (- (* a f) (* c e)) g)
+              dx (- cx (aref v0 0))
+              dy (- cy (aref v0 1))))
     (let* ((radius-squared (+ (* dx dx)
                               (* dy dy)))
            (radius (sqrt radius-squared)))
@@ -215,7 +212,7 @@ Will return the square root of the result unless :squared t"
     
     ;; For each point in the list we get an updated set
     ;; of triangles by retesselating using the new point
-    (loop for i from 0 upto (- (length points) 1)
+    (loop for i below (length points)
        do (setf triangles (add-vertex i triangles points)))
     
     ;; Remove any triangles that share points with the super triangle
