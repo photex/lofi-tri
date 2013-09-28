@@ -1,6 +1,6 @@
 ;;;; lofi-tri.lisp
 
-(in-package #:lofi-tri)
+(in-package #:lofi.tri)
 
 ;;; "lofi-tri" goes here. Hacks and glory await!
 
