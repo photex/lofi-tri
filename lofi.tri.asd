@@ -9,5 +9,5 @@
                #:sb-cga
                #:alexandria)
   :components ((:file "package")
-               (:file "lofi-tri")))
+               (:file "lofi.tri")))
 
