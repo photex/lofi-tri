@@ -1,6 +1,6 @@
 ;;;; lofi-tri.lisp
 
-(in-package #:lofi-tri)
+(in-package #:lofi.tri)
 
 ;;; "lofi-tri" goes here. Hacks and glory await!
 
@@ -38,15 +38,15 @@
 
 (defmacro sort-by-x (point-set)
   "Sort the input point set by the value at 0"
-  `(sort-set-by ,point-set 0))
+  `(sort-by ,point-set 0))
 
 (defmacro sort-by-y (point-set)
   "Sort the input point set by the value at 1"
-  `(sort-set-by ,point-set 1))
+  `(sort-by ,point-set 1))
 
 (defmacro sort-by-z (point-set)
   "Sort the input point set by the value at 2"
-  `(sort-set-by ,point-set 2))
+  `(sort-by ,point-set 2))
 
 (defun get-min-max (point-set)
   "Return the min and max vectors for the given point set. Effectively the bounding box."
@@ -56,9 +56,9 @@
          (miny (aref first-point 1)) (maxy (aref first-point 1))
          (minz (aref first-point 2)) (maxz (aref first-point 2)))
     (loop :for p :across rest-points :do
-       (setf minx (min minx (aref p 0))) (setf maxx (max maxx (aref p 0)))
-       (setf miny (min miny (aref p 1))) (setf maxy (max maxy (aref p 1)))
-       (setf minz (min minz (aref p 2))) (setf maxz (max maxz (aref p 2))))
+       (setf minx (min minx (aref p 0)) maxx (max maxx (aref p 0))
+             miny (min miny (aref p 1)) maxy (max maxy (aref p 1))
+             minz (min minz (aref p 2)) maxz (max maxz (aref p 2))))
     (values (vec minx miny minz) (vec maxx maxy maxz))))
 
 (defun get-bounding-triangle-points (point-set &optional (fudge-factor 10))
@@ -117,6 +117,7 @@ Will return the square root of the result unless :squared t"
                 cy (/ (+ miny maxy) 2)
                 dx (- cx minx)
                 dy (- cy miny)))
+        ;; else
         (setf cx (/ (- (* d e) (* b f)) g)
               cy (/ (- (* a f) (* c e)) g)
               dx (- cx (aref v0 0))
@@ -204,7 +205,6 @@ Will return the square root of the result unless :squared t"
          (sti1 (1+ sti0))
          (sti2 (1+ sti1))
          (points (concatenate 'vector points st-coords))
-         
          ;; Create the bounding triangle instance
          (supertri (new-triangle sti0 sti1 sti2 points))
          ;; Initialize our triangle list
