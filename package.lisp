@@ -13,6 +13,9 @@
            #:distance
            #:midpoint
            #:circumcircle
+           #:center
+           #:radius
+           #:verts
            #:in-circumcircle?
            #:has-shared-verts?
            #:triangulate))

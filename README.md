@@ -22,20 +22,20 @@ you provided the triangulate function. To get something like the screenshot abov
                     (y (+ (aref center 1) (* radius (cos (* trig-step i))))))
                 (gl:vertex x y 0))))))
               
-    ;;; Draw the triangulation
+    ;; Draw the triangulation
     (loop for tri in *test-triangulation*
        do (progn
             ;; Draw the circumcircles
             (gl:color 0.15 0.05 0.15 0.05)
             (gl:line-width 1)
-            (let ((cir (slot-value tri 'circumcircle)))
-              (draw-circle (slot-value cir 'center) (slot-value cir 'radius)))
+            (let ((cir (slot-value tri 'lofi.tri:circumcircle)))
+              (draw-circle (slot-value cir 'lofi.tri:center) (slot-value cir 'lofi.tri:radius)))
 
             ;; Draw the triangles
             (gl:color 0 0.25 1 0.25)
             (gl:line-width 2)
             (gl:with-primitive :triangles
-              (let ((verts (slot-value tri 'verts)))
+              (let ((verts (slot-value tri 'lofi.tri:verts)))
                 (loop for i from 0 upto 2
                    do (let* ((vi (aref verts i))
                              (v (aref *test-points* vi)))
