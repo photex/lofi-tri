@@ -106,9 +106,9 @@ Will return the square root of the result unless :squared t"
                (* d (aref v2+v0 1))))
          (g (* 2.0 (- (* a (aref v2-v1 1))
                       (* b (aref v2-v1 0)))))
-         (collinear? (< (abs g) +default-epsilon+))
+         (colinear? (< (abs g) +default-epsilon+))
          (cx 0.0) (cy 0.0) (dx 0.0) (dy 0.0))
-    (if collinear?
+    (if colinear?
         (let ((minx (min (aref v0 0) (aref v1 0) (aref v2 0)))
               (miny (min (aref v0 1) (aref v1 1) (aref v2 1)))
               (maxx (max (aref v0 0) (aref v1 0) (aref v2 0)))
